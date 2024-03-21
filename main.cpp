@@ -10,9 +10,9 @@ int main() {
     int dlina1(char*);
     int dlina2(char*);
     int dlina3(char*);
-    void kopir(char*, char*);
-    void sravn(char*, char*);
-    void konkat(char*, char*);
+    char* kopir(char*, char*);
+    int sravn(char*, char*);
+    char* konkat(char*, char*);
 
     cout << "длина str1="<<dlina1(str1)<<",str2=";
     cout << dlina1(str2)<<endl;
@@ -43,12 +43,36 @@ int dlina2(char* ch) {
 int dlina3(char* ch) {
     return strlen(ch);
 }
-void kopir(char* ch1, char* ch2) {
-    strcpy(ch1,ch2);
+char* kopir(char* ch1, char* ch2) {
+    char* tmp = ch1;
+    while (*ch2) {
+        *ch1++ = *ch2++;
+    }
+    *ch1 = '\0';  // Добавляем завершающий нулевой символ
+    return tmp;
 }
-void sravn(char* ch1, char* ch2) {
-    strcmp(ch1,ch2);
+int sravn(char* ch1, char* ch2) {
+    while (*ch1 && (*ch1 == *ch2)) {
+        ch1++;
+        ch2++;
+    }
+    return *ch1 - *ch2;
 }
-void konkat(char* ch1, char* ch2) {
-    strcat(ch1,ch2);
+char* konkat(char* ch1, const char* ch2) {
+    char* tmp = ch1; // Сохраняем начальный адрес ch1
+
+    // Находим конец строки ch1
+    while (*ch1 != '\0') {
+        ch1++;
+    }
+
+    // Копируем строку ch2 в конец ch1
+    while (*ch2 != '\0') {
+        *ch1++ = *ch2++;
+    }
+
+    // Добавляем завершающий нулевой символ
+    *ch1 = '\0';
+
+    return tmp; // Возвращаем начальный адрес ch1
 }
